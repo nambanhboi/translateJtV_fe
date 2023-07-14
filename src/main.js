@@ -1,4 +1,18 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import axios from 'axios';
 
-createApp(App).mount('#app')
+import App from './App.vue';
+import router from './router';
+import Table from "./components/Table.vue"
+
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+const app = createApp(App);
+
+app.use(router);
+app.config.globalProperties.$http = axios;
+
+app.component('Table-', Table);
+
+app.mount('#app');
