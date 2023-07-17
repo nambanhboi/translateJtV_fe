@@ -16,6 +16,11 @@ const routes = [
         name: "paragraph_list",
         component: () => import("../views/admin/ParagraphList.vue"),
     },
+    {
+        path: "/admin/sentence_list",
+        name: "sentence_list",
+        component: () => import("../views/admin/SentenceList.vue"),
+    },
 ];
 
 const router = createRouter({

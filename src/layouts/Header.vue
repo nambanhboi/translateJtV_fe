@@ -1,6 +1,6 @@
 <template>
     <nav
-    class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom border-dark"
+    class="navbar navbar-expand-lg navbar-scroll shadow-0 border-bottom border-dark"
   >
     <div class="container">
       <h3>DICTIONARY JTV</h3>
@@ -20,6 +20,16 @@
           <li class="nav-item">
             <router-link to="/" class="router"
               ><strong>Trang Chủ</strong></router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link to="/admin/paragraph_list" class="router"
+              ><strong>Quản lý đoạn</strong></router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link to="/admin/sentence_list" class="router"
+              ><strong>Quản lý câu</strong></router-link
             >
           </li>
           <li class="nav-item">
