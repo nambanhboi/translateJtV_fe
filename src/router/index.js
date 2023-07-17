@@ -17,9 +17,14 @@ const routes = [
         component: () => import("../views/admin/ParagraphList.vue"),
     },
     {
-        path: "/admin/sentence_list",
-        name: "sentence_list",
-        component: () => import("../views/admin/SentenceList.vue"),
+        path: "/login",
+        name: "login",
+        component: () => import("../views/app/logIn.vue"),
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: () => import("../views/app/register.vue"),
     },
 ];
 
