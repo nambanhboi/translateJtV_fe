@@ -1,6 +1,8 @@
 <template>
   <Header />
-    <router-view />
+    <div class="view_main">
+      <router-view />
+    </div>
   <Footer />
 </template>
 
@@ -17,3 +19,12 @@ export default {
 }
 </script>
 
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .view_main{
+    min-height: 70vh;
+  }
+</style>
