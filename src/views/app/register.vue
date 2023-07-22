@@ -87,26 +87,27 @@ export default {
         password: '',
       }
     },
-    mounted() {
-       this.submitForm();
-    },
+    // mounted() {
+    //    this.submitForm();
+    // },
     methods: {
       submitForm(){
         const forData ={
           username:  this.username,
           password:  this.password,
         }
-        console.log(forData)
         axios
         .post('/api/v1/users/',forData)
         .then((response) => {
           // Xử lý phản hồi thành công
           this.$router.push('/login')
+          alert('Đăng ký thành công!');
           console.log(response);
         })
         .catch((error) => {
           // Xử lý lỗi
           console.error(error);
+          console.log('lỗi rồi')
         });
       }
     },

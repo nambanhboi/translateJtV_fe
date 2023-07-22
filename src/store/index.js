@@ -4,6 +4,8 @@ export default createStore({
     state: {
         token: '';
         isAuthenticated: false
+        // isLoggedIn: false,
+        // username: '',
     },
     mutations: {
         initializeStore(state){
@@ -24,6 +26,10 @@ export default createStore({
             state.token = '';
             state.isAuthenticated = false
         },
+        // login(state,usernam){
+        //     state.isLoggedIn = true.
+        //     state.username = username
+        // }
     },
     actions:{
 
