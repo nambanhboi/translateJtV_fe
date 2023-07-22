@@ -26,6 +26,11 @@ const routes = [
         name: "register",
         component: () => import("../views/app/register.vue"),
     },
+    {
+        path: "/sentence_list/:id",
+        name: "detail",
+        component: () => import("../views/app/detail.vue"),
+    },
 ];
 
 const router = createRouter({

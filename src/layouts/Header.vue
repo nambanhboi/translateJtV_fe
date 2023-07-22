@@ -1,7 +1,6 @@
 <template>
     <nav
-    class="navbar navbar-expand-lg navbar-scroll shadow-0 border-bottom border-dark"
-  >
+    class="navbar navbar-expand-lg navbar-scroll shadow-0 border-bottom border-dark">
     <div class="container">
       <div class="logo">
         <router-link to="/" class="router">
@@ -36,14 +35,17 @@
           </li>
           <li class="nav-item">
             <router-link to="/admin/sentence_list" class="router"
-              ><strong>Quản lý câu</strong></router-link
-            >
+              ><strong>Quản lý câu</strong></router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/report" class="router"
-              ><strong>Báo Cáo</strong></router-link
-            >
-              ><strong><i class="fa-solid fa-user"></i> <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link></strong></router-link>
+            <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link>
+            <i class="fa-solid fa-user"></i> 
+              <div class="loggedIn" v-if="users">
+                <p>{{ users.username }}</p>
+              </div>
+              <div class="logIn-register" v-if="!users" >
+                <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
+              </div>
           </li>
         </ul>
       </div> 
@@ -52,7 +54,9 @@
 </template>
 <script>
 export default {
-    name: 'Header-'
+    name: 'Header-',
+    props: ['users'],
+
 };
 </script>
 <style>

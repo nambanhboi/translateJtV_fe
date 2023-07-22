@@ -1,8 +1,6 @@
 <template>
-  <Header />
-    <div class="view_main">
-      <router-view />
-    </div>
+  <Header :users="users" />
+    <router-view :users="users"/>
   <Footer />
 </template>
 
@@ -14,9 +12,25 @@ export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
   },
+  data() {
+    return {
+      users: [],
+    }
+  },
+
   methods: {
+    created(){
+    axios
+    .get('/api/v1/users/')
+    .then((response) =>{
+      this.users = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  },
     beforeCreate(){
     this.$store.commit('initializeStore')
     const token = this.$store.state.token
@@ -26,19 +40,16 @@ export default {
     else{
       axios.defaults.headers.common['Authorization'] = ''
     }
-  }
+    }
   }
   
 }
 </script>
 
-
 <style>
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  .view_main{
-    min-height: 70vh;
-  }
+.router {
+  color: #000;
+}
+
 </style>
+

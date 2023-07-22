@@ -16,7 +16,7 @@
               <p>Xem toàn bộ ngữ cảnh <i class="fa-solid fa-up-down-left-right"></i></p>
             </div>
             <div class="comment">
-              <p>Thảo Luận <i class="fa-regular fa-message"></i></p>
+              <router-link to="/sentence_list/:id">Thảo Luận <i class="fa-regular fa-message"></i></router-link>
             </div>
           </div>
           <div class="column3">
@@ -31,7 +31,9 @@
         </div>
       </div>
       <hr style="margin:15px 0;">
+      
     </div>
+    
   </div>
 </template>
 
@@ -41,11 +43,21 @@
 export default {
   name: "resultSearch",
   props:['sentenceList'],
-
+  // data() {
+  //     return {
+  //       description: '',
+  //     }
+  //   },
+  methods: {
+    btn_comment(){
+      console.log('hiển thị rồi nè')
+    }
+  },
 };
 </script>
 
 <style scoped>
+
 .resutlContent{
   display: flex;
 }
@@ -93,5 +105,23 @@ export default {
   margin-top: 1rem;
   justify-content: space-between;
 }
+
+.comment:hover{
+  cursor: pointer;
+  background-color: #ff2798;
+}
+
+.comment a:hover{
+  color: #fff !important;
+
+}
+
+.comment a{
+  line-height: 34px;
+  padding: 0 20px;
+  color: #000;
+  text-decoration: none;
+}
+
 
 </style>
