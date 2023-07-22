@@ -43,7 +43,7 @@
             <router-link to="/report" class="router"
               ><strong>Báo Cáo</strong></router-link
             >
-              ><strong><i class="fa-solid fa-user"></i> <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link></strong></router-link>
+              <strong><i class="fa-solid fa-user"></i> <router-link to="/login" class="nav-logIn">Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link></strong>
           </li>
         </ul>
       </div> 
@@ -57,9 +57,7 @@ export default {
 </script>
 <style>
 /* Color of the navbar BEFORE scroll */
-.nav {
-  margin-bottom: 100px;
-}
+
 .navbar-scroll {
   background-color: #fff;
 }
