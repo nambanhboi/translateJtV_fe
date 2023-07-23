@@ -16,7 +16,7 @@
               <p>Xem toàn bộ ngữ cảnh <i class="fa-solid fa-up-down-left-right"></i></p>
             </div>
             <div class="comment">
-              <router-link to="/sentence_list/:id">Thảo Luận <i class="fa-regular fa-message"></i></router-link>
+              <router-link to="/detail/:id">Thảo Luận <i class="fa-regular fa-message"></i></router-link>
             </div>
           </div>
           <div class="column3">
@@ -38,16 +38,11 @@
 </template>
 
 <script>
-// import axios from "axios";
 
 export default {
   name: "resultSearch",
   props:['sentenceList'],
-  // data() {
-  //     return {
-  //       description: '',
-  //     }
-  //   },
+
   methods: {
     btn_comment(){
       console.log('hiển thị rồi nè')

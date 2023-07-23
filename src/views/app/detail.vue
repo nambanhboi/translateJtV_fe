@@ -1,15 +1,15 @@
-<!-- <template>
+<template>
     <div class="show-comments">
       <h1>hello</h1>
-      <div class="container-comments" v-for="sentence in sentenceList" v-bind:key="sentence.id">
+      <div class="container-comments" >
         <div class="resutlContent">
           <div class="resutlImg">
-            <img :src="sentence.image" >
+            <img :src="sentenceList.image" >
           </div>
           <div class="resutlDes">
             <div class="column1">
-              <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{ sentence.sentenceJV }}</h2>
-              <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
+              <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{ sentenceList.sentenceJV }}</h2>
+              <p style="font-size:1.5rem; margin-bottom:0;">{{ sentenceList.sentenceVN }}</p>
             </div>
             <div class="column2">
               <div class="detail">
@@ -18,8 +18,8 @@
             </div>
             <div class="column3">
               <div class="column3Left">
-                <div class="style"><p>#{{ sentence.style }}</p></div>
-                <div class="topic"><p>#{{ sentence.topic }}</p></div>
+                <div class="style"><p>#{{ sentenceList.style }}</p></div>
+                <div class="topic"><p>#{{ sentenceList.topic }}</p></div>
               </div>
               <div class="column3Right">
                 <p><i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo</p>
@@ -34,10 +34,10 @@
               <input type="text" id="comment" class="form-control" placeholder="Nhập bình luận" v-model="description" />
               <button type="submit" class="btn-comment" >Bình Luận</button>
             </div>
-            <div class="display-cmts">
+            <!-- <div class="display-cmts">
               {{users.username}}  
-              {{comments.description}}
-            </div> 
+              {{comments.description}} 
+            </div> -->
           </div>
         </form>
       </div>
@@ -45,10 +45,11 @@
   </template>
   
   <script>
+
   export default {
     name: "detail-",
-    props:['sentenceList'],
-  };
+    props:['sentenceList'],    
+  }
   </script>
   
 <style scoped>
@@ -124,17 +125,5 @@
 
 
 </style>
-   -->
+  
 
-<template>
-  <DIV>
-    <img :src="sentence.image" alt="">
-  </DIV>
-</template>
-
-<script>
-export default {
-  name: "detail-",
-  props:['sentenceList'],
-};
-</script>

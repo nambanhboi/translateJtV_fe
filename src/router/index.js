@@ -27,7 +27,7 @@ const routes = [
         component: () => import("../views/app/register.vue"),
     },
     {
-        path: "/sentence_list/:id",
+        path: "/detail/:id",
         name: "detail",
         component: () => import("../views/app/detail.vue"),
     },
