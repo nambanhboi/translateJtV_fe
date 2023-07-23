@@ -61,9 +61,7 @@ export default {
 </script>
 <style>
 /* Color of the navbar BEFORE scroll */
-.nav {
-  margin-bottom: 100px;
-}
+
 .navbar-scroll {
   background-color: #fff;
 }

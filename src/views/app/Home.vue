@@ -140,7 +140,7 @@ export default {
     border: 1px solid black;
   }
   .container {
-    margin-top: 5rem;
+    margin-top: 2rem;
   }
 
   .filter {
