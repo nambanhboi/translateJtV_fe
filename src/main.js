@@ -6,6 +6,7 @@ import App from './App.vue';
 import router from './router';
 import Table from "./components/Table.vue"
 import Modal from "./components/Modal.vue"
+import store from './store';
 
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 const app = createApp(App);
@@ -13,6 +14,7 @@ const app = createApp(App);
 
 
 app.use(router);
+app.use(store);
 app.config.globalProperties.$http = axios;
 
 app.component('Table-', Table);

@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <i class="fas fa-bars btn-admin"></i>
+            <i class="fas fa-bars btn-admin" ></i>
 
             <router-link to="/" class="router"
               ><strong>Trang Chủ</strong></router-link
@@ -39,11 +39,12 @@
           </li>
           <li class="nav-item">
             <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link>
-            <i class="fa-solid fa-user"></i> 
-              <div class="loggedIn" v-if="users">
-                <p>{{ users.username }}</p>
+            <i class="fa-solid fa-user" @click="togglDisplay"></i> 
+              <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
+              <div class="loggedIn" v-if="user" >
+                <p>{{ user.username}}</p>
               </div>
-              <div class="logIn-register" v-if="!users" >
+              <div class="logIn-register" v-else>
                 <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
               </div>
           </li>
@@ -55,13 +56,71 @@
 <script>
 export default {
     name: 'Header-',
-    props: ['users'],
+    // props: ['users'],
+  //   computed: {
+  //   savedUsername() {
+  //     // Get the saved username from localStorage
+  //     return localStorage.getItem("username");
+  //   },
 
+  //   data() {
+  //     return {
+  //       showLogOut: false
+  //     }
+  //   },
+  //   methods: {
+  //     togglDisplay(){
+  //       console.log('clickrooine')
+  //       this.showLogOut = !this.showLogOut
+  //     },
+  //     logOut(){
+  //       console.log('clickrooine')
+  //       localStorage.removeItem("username");
+    
+  //   // Hoặc xóa toàn bộ dữ liệu localStorage (tùy chọn nếu bạn lưu thông tin khác nữa)
+  //   // localStorage.clear();
+
+  //   // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chủ
+  //   // Ví dụ:
+  //     this.$router.push('/login');
+  //     }
+  //   },
+  // }
+  //     savedUsername() {
+  // //     Get the saved username from localStorage
+  //    return localStorage.getItem("username", this.username);
+  //      },
+    computed:{
+      user(){
+        return this.$store.getters.user;
+      },
+      username(){
+        return this.$store.getters.username;
+      },
+    },
+    methods:{
+      logout(){
+        this.$store.dispatch('logout');
+        this.$router.push('/login')
+      }
+    }
 };
 </script>
 <style>
-/* Color of the navbar BEFORE scroll */
 
+.logOut{
+  position: absolute;
+    top: 73px;
+    border: 1px solid #fff;
+    background-color: pink;
+    color: #fff;
+    padding: 5px 10px;
+    left: 1284px;
+}
+/* Color of the navbar BEFORE scroll */
+.fa-user:hover{
+  cursor: pointer;
+}
 .navbar-scroll {
   background-color: #fff;
 }

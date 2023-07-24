@@ -2,14 +2,14 @@
     <div class="show-comments">
       <h1>hello</h1>
       <div class="container-comments" >
-        <div class="resutlContent">
+        <div class="resutlContent" >
           <div class="resutlImg">
-            <img :src="sentenceList.image" >
+            <img :src=" sentence.image" >
           </div>
           <div class="resutlDes">
             <div class="column1">
-              <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{ sentenceList.sentenceJV }}</h2>
-              <p style="font-size:1.5rem; margin-bottom:0;">{{ sentenceList.sentenceVN }}</p>
+              <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{  sentence.sentenceJV }}</h2>
+              <p style="font-size:1.5rem; margin-bottom:0;">{{  sentence.sentenceVN }}</p>
             </div>
             <div class="column2">
               <div class="detail">
@@ -18,8 +18,8 @@
             </div>
             <div class="column3">
               <div class="column3Left">
-                <div class="style"><p>#{{ sentenceList.style }}</p></div>
-                <div class="topic"><p>#{{ sentenceList.topic }}</p></div>
+                <div class="style"><p>#{{ sentence.style }}</p></div>
+                <div class="topic"><p>#{{  sentence.topic }}</p></div>
               </div>
               <div class="column3Right">
                 <p><i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo</p>
@@ -46,10 +46,38 @@
   
   <script>
 
-  export default {
+import axios from "axios";
+// import { onMounted } from 'vue'
+
+import { defineComponent } from "vue"
+
+    
+  export default defineComponent({
     name: "detail-",
-    props:['sentenceList'],    
-  }
+    props: ['id'],
+    data() {
+      return {
+        sentence: [],
+      }
+    },
+    mounted() {
+     
+    },
+    // mounted((id) => {
+    //   // const sentence = ref({})
+    //   // axios.get(`/api/v1/app/sentence_list/${id}`)
+    //   .then((response) => {
+    //   // sentence.value = data.sentenceList[0] || {}
+    //   this.sentence = response.data
+    // })
+    // }),
+    setup(props){
+      axios.get(`/api/v1/app/sentence_list/${props.id}`)
+      return {
+
+      }
+    }
+  })
   </script>
   
 <style scoped>

@@ -24,7 +24,7 @@
               </p>
             </div>
             <div class="comment">
-              <router-link to="/detail/:id">Thảo Luận <i class="fa-regular fa-message"></i></router-link>
+              <router-link :to="{name:'detail',params:{id:sentence.id} }" >Thảo Luận <i class="fa-regular fa-message"></i></router-link>
             </div>
           </div>
           <div class="column3">

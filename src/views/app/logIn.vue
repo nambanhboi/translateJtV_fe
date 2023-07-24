@@ -79,7 +79,7 @@
 
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
     name: 'login-',
@@ -90,31 +90,48 @@ export default {
       }
     },
 
-    mounted() {
-       this.submitForm();
-    },
+    // mounted() {
+    //    this.submitForm();
+    // },
     methods: {
       submitForm(){
-        const forData ={
-          username:  this.username,
-          password:  this.password,
-        }
-        axios
-        .post('/api/v1/token/login',forData)
-        .then((response) => {
-          // Xử lý phản hồi thành công
-          this.$router.push('/')
-          const token = response.data.auth_token
-          this.$store.commit('setToken',token)
-          axios.defaults.headers.common['Authorization']= 'Token' + token
-          localStorage.setItem('token',response.data.token)
-        })
-        .catch((error) => {
-          // Xử lý lỗi
-          console.error(error);
-        });
-      }
+        // const forData ={
+        //   username:  this.username,
+        //   password:  this.password,
+        // }
+      //   axios
+      //   .post('/api/v1/token/login',{ username: this.username, password: this.password })
+      //   .then((response) => {
+      //     // Xử lý phản hồi thành công
+      //     console.log(response.data)
+      //     localStorage.setItem('username',response.data.username)
+      //     const token = response.data.auth_token
+      //     this.$store.commit('setToken',token)
+      //     axios.defaults.headers.common['Authorization']= 'Token' + token
+      //     localStorage.setItem('token',response.data.token)
+      //     localStorage.setItem("username", this.username);
+      //     console.log('username')
+      //     this.$router.push('/')
+
+      //   })
+      //   .catch((error) => {
+      //     // Xử lý lỗi
+      //     console.error(error);
+      //   });
+      // }
+      this.$store.dispatch('login',{username: this.username, password :this.password})
+      .then(()=>{
+        this.$router.push('/')
+       localStorage.setItem("username", this.username);
+       console.log(this.username)
+
+      })
+      .catch(error=>{
+        console.error(error)
+        console.log('Lỗi rồi đăng nhập!')
+      })
     },
+  }
 }
 </script>
 
