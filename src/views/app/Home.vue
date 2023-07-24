@@ -56,7 +56,6 @@
   
 <script>
 import resultSearch from "../../components/resultSeach.vue"
-
 import axios from "axios";
 
 export default {

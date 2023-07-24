@@ -4,13 +4,12 @@
     <div v-for="sentence in sentenceList" v-bind:key="sentence.id">
       <div class="resutlContent">
         <div class="resutlImg">
-          <img :src="sentence.image" width="100%"/>
+          <img :src="sentence.image" width="100%" />
         </div>
         <div class="resutlDes">
           <div class="column1">
             <h2>
-              <i class="fa-solid fa-headphones" style="margin-right: 5px"></i
-              >{{ sentence.sentenceJV }}
+              <i class="fa-solid fa-headphones" style="margin-right: 5px"></i>{{ sentence.sentenceJV }}
             </h2>
             <p style="font-size: 1.5rem; margin-bottom: 0">
               {{ sentence.sentenceVN }}
@@ -24,7 +23,8 @@
               </p>
             </div>
             <div class="comment">
-              <router-link to="/sentence_list/:id">Thảo Luận <i class="fa-regular fa-message"></i></router-link>
+              <router-link :to="{ name: 'detail', params: { id: sentence.id } }">Thảo Luận <i
+                  class="fa-regular fa-message"></i></router-link>
             </div>
           </div>
           <div class="column3">
@@ -37,93 +37,83 @@
               </div>
             </div>
             <div class="column3Right">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo
               </button>
 
               <!-- Modal -->
-              <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="exampleModalLabel">
                         <i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo
                       </h1>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body modal-bd1" ref="modalBd1">
                       <!-- body1 -->
                       <div class="form-check">
-                        <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault1" value="report" v-model="selectedRadio"/>
-                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi sai của câu </label>
+                        <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault1" value="report"
+                          v-model="selectedRadio" />
+                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi
+                          sai của câu </label>
                       </div>
 
                       <!-- Default checked radio -->
                       <div class="form-check">
-                        <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault2" value="contribute" v-model="selectedRadio" />
-                        <label class="btn btn-secondary" for="flexRadioDefault2" style="font-size:1.5rem;"> Đóng góp câu mới </label>
+                        <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault2" value="contribute"
+                          v-model="selectedRadio" />
+                        <label class="btn btn-secondary" for="flexRadioDefault2" style="font-size:1.5rem;"> Đóng góp câu
+                          mới </label>
 
                       </div>
 
-                      
+
                     </div>
 
-                    <div class="modal-body modal-bd2" v-if="selectedRadio ==='report'">
+                    <div class="modal-body modal-bd2" v-if="selectedRadio === 'report'">
                       <!-- body2 -->
                       <hr>
                       <div class="form-check ">
-                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault3" value="dịch sai nghĩa tiếng việt" v-model="report"/>
-                        <label class="form-check-label" for="flexRadioDefault1" style="font-size:1.5rem;">dịch sai nghĩa tiếng việt</label>
+                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault3"
+                          value="dịch sai nghĩa tiếng việt" v-model="report" />
+                        <label class="form-check-label" for="flexRadioDefault1" style="font-size:1.5rem;">dịch sai nghĩa
+                          tiếng việt</label>
                       </div>
 
                       <!-- Default checked radio -->
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault4" value="Sai ngữ pháp" v-model="report"/>
-                        <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Sai ngữ pháp</label>
+                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault4"
+                          value="Sai ngữ pháp" v-model="report" />
+                        <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Sai ngữ
+                          pháp</label>
                       </div>
 
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault4" value="Lỗi khác" v-model="report"/>
+                        <input class="form-check-input" type="radio" name="report" id="flexRadioDefault4" value="Lỗi khác"
+                          v-model="report" />
                         <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Lỗi khác</label>
                       </div>
                       <button type="button" class="btn btn-primary" @click="submitReport">Gửi</button>
                     </div>
 
-                    <div class="modal-body modal-bd3" v-if="selectedRadio ==='contribute'">
+                    <div class="modal-body modal-bd3" v-if="selectedRadio === 'contribute'">
                       <!-- body2 -->
                       <hr>
                       <form action="" class="formInModal">
                         <input type="text" name="" placeholder="Câu tiếng nhật" v-model="contributeJ">
                         <input type="text" name="" placeholder="Câu tiếng Việt tương ứng" v-model="contributeV">
-                        <button type="button" class="btn btn-primary" >Gửi</button>
+                        <button type="button" class="btn btn-primary">Gửi</button>
                       </form>
-                      
+
                     </div>
                     <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Close
                       </button>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -134,7 +124,7 @@
       </div>
       <hr style="margin: 15px 0" />
     </div>
-    
+
   </div>
 </template>
 
@@ -143,11 +133,11 @@ import axios from 'axios';
 // import axios from "axios";
 export default {
   name: "resultSearch",
-  props:['sentenceList'],
+  props: ['sentenceList'],
   data() {
     return {
       selectedRadio: "",
-      report:"",
+      report: "",
       contributeJ: "",
       contributeV: "",
     }
@@ -156,17 +146,21 @@ export default {
   methods: {
     submitReport() {
       axios
-      .post('/api/v1/app/Report/', {
-        TypeName : this.report,
-        // User: 
-      })
-      .then(function () {
-        alert('thành công!');
-        console.log(this.report);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .post('/api/v1/app/Report/', {
+          TypeName: this.report,
+          // User: 
+        })
+        .then(function () {
+          alert('thành công!');
+          console.log(this.report);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    btn_comment() {
+      console.log('hiển thị rồi nè')
     }
   }
 };
@@ -183,20 +177,25 @@ export default {
   overflow: hidden;
   object-position: center;
 }
+
 .resutlImg img {
   width: 100%;
 }
-.resutlDes{
+
+.resutlDes {
   width: 65%;
 }
+
 .column1,
 .column2,
 .column3 {
   margin-left: 1rem;
 }
+
 .column2 {
   margin-top: 1rem;
 }
+
 .column2,
 .column3Left {
   display: flex;
@@ -208,6 +207,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .comment {
   margin-left: 1rem;
 }
@@ -224,28 +224,29 @@ export default {
   justify-content: space-between;
 }
 
-.comment:hover{
+.comment:hover {
   cursor: pointer;
   background-color: #ff2798;
 }
 
-.comment a:hover{
+.comment a:hover {
   color: #fff !important;
 
 }
 
-.comment a{
+.comment a {
   line-height: 34px;
   padding: 0 20px;
   color: #000;
   text-decoration: none;
 }
+
 /* modal */
-.formInModal{
+.formInModal {
   display: grid;
 }
 
-.formInModal input{
+.formInModal input {
   padding: 5px 10px;
   border-radius: 10px;
   margin-bottom: 5px;
