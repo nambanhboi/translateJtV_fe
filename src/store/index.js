@@ -2,7 +2,7 @@ import {createStore} from 'vuex'
 
 export default createStore({
     state: {
-        token: '';
+        token: '',
         isAuthenticated: false
         // isLoggedIn: false,
         // username: '',
@@ -12,10 +12,10 @@ export default createStore({
             if( localStorage.getItem('token')){
                 state.token + localStorage.getItem('token')
                 state.isAuthenticated = false
+            }
             else{
                 state.token='';
                 state.isAuthenticated = false
-            }
             }
         },
         setToken(state,token){

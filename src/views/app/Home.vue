@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div style="min-height:61vh;">
+    <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6" style="display:flex;">
         <input type="text" 
@@ -50,6 +51,7 @@
     </div>
   </div>
   <resultSearch :sentenceList = "sentenceList"></resultSearch>
+  </div>
 </template>
   
 <script>

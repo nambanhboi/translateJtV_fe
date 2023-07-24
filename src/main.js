@@ -18,4 +18,5 @@ app.config.globalProperties.$http = axios;
 app.component('Table-', Table);
 app.component("Modal-", Modal);
 
+
 app.mount('#app');

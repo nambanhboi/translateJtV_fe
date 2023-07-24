@@ -1,6 +1,6 @@
 <template>
   <Header :users="users" />
-    <router-view :users="users"/>
+    <router-view :users="users" />
   <Footer />
 </template>
 
