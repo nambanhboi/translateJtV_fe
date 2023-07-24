@@ -34,13 +34,14 @@
           <!-- Email input -->
           <div class="form-outline mb-4">
             <label class="form-label" for="loginName">Email hoặc Tên người dùng</label>
-            <input type="text" id="loginName" class="form-control" placeholder="Nhập email hoặc Tên người dùng" />
+            <input type="text" id="loginName" class="form-control" placeholder="Nhập email hoặc Tên người dùng" v-model="username"/>
           </div>
+          
 
           <!-- Password input -->
           <div class="form-outline mb-4">
             <label class="form-label" for="loginPassword">Mật khẩu</label>
-            <input type="password" id="loginPassword" class="form-control" placeholder="Nhập mật khẩu"/>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Nhập mật khẩu" v-model="password"/>
           </div>
 
           <!-- 2 column grid layout -->
@@ -60,7 +61,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-4 btn-login">Đăng Nhập</button>
+          <button type="submit" class="btn btn-primary btn-block mb-4 btn-login" @click="submitForm">Đăng Nhập</button>
 
           <!-- Register buttons -->
           <div class="text-center">
@@ -78,49 +79,63 @@
 
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
     name: 'login-',
     data() {
       return {
-        // name:'';
         username: '',
-        // email: '';
         password: '',
-        // passwordrepeat: '';
       }
     },
 
-    mounted() {
-       this.submitForm();
-    },
+    // mounted() {
+    //    this.submitForm();
+    // },
     methods: {
       submitForm(){
-        const forData ={
-          username:  this.username,
-          password:  this.password,
-        }
-        axios
-        .post('/api/v1/token/login',forData)
-        .then((response) => {
-          // Xử lý phản hồi thành công
-          console.log(response);
-          const token = response.data.auth_token
-          this.$store.commit('setToken',token)
-          axios.defaults.headers.common['Authorization']= 'Token' + token
-          localStorage.setItem('token',token)
-        })
-        .catch((error) => {
-          // Xử lý lỗi
-          console.error(error);
-        });
-      }
+        // const forData ={
+        //   username:  this.username,
+        //   password:  this.password,
+        // }
+      //   axios
+      //   .post('/api/v1/token/login',{ username: this.username, password: this.password })
+      //   .then((response) => {
+      //     // Xử lý phản hồi thành công
+      //     console.log(response.data)
+      //     localStorage.setItem('username',response.data.username)
+      //     const token = response.data.auth_token
+      //     this.$store.commit('setToken',token)
+      //     axios.defaults.headers.common['Authorization']= 'Token' + token
+      //     localStorage.setItem('token',response.data.token)
+      //     localStorage.setItem("username", this.username);
+      //     console.log('username')
+      //     this.$router.push('/')
+
+      //   })
+      //   .catch((error) => {
+      //     // Xử lý lỗi
+      //     console.error(error);
+      //   });
+      // }
+      this.$store.dispatch('login',{username: this.username, password :this.password})
+      .then(()=>{
+        this.$router.push('/')
+       localStorage.setItem("username", this.username);
+       console.log(this.username)
+
+      })
+      .catch(error=>{
+        console.error(error)
+        console.log('Lỗi rồi đăng nhập!')
+      })
     },
+  }
 }
 </script>
 
-<style>
+<style scoped>
 .router {
   color: #000;
 }

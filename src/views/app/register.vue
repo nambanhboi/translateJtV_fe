@@ -87,27 +87,43 @@ export default {
         password: '',
       }
     },
-    mounted() {
-       this.submitForm();
-    },
+    // mounted() {
+    //    this.submitForm();
+    // },
     methods: {
+      // submitForm(){
+      //   const forData ={
+      //     username:  this.username,
+      //     password:  this.password,
+      //   }
+      //   axios
+      //   .post('/api/v1/users/',forData)
+      //   .then((response) => {
+      //     // Xử lý phản hồi thành công
+      //     this.$router.push('/login')
+      //     alert('Đăng ký thành công!');
+      //     console.log(response);
+      //   })
+      //   .catch((error) => {
+      //     // Xử lý lỗi
+      //     console.error(error);
+      //     console.log('lỗi rồi')
+      //   });
+      // }
       submitForm(){
-        const forData ={
-          username:  this.username,
-          password:  this.password,
-        }
-        console.log(forData)
-        axios
-        .post('/api/v1/users/',forData)
-        .then((response) => {
-          // Xử lý phản hồi thành công
+        const user ={
+          username: this.username,
+          password: this.password,
+        };
+        axios.post('/api/v1/users/',user)
+        .then(response =>{
+          console.log('Đăng ký thành công!',response.data)
           this.$router.push('/login')
-          console.log(response);
         })
-        .catch((error) => {
-          // Xử lý lỗi
-          console.error(error);
-        });
+        .catch(error => {
+          console.error(error)
+          console.log("đăng ký lỗi rồi")
+        })
       }
     },
 }

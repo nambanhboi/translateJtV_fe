@@ -54,7 +54,6 @@
   
 <script>
 import resultSearch from "../../components/resultSeach.vue"
-
 import axios from "axios";
 
 export default {
@@ -141,7 +140,7 @@ export default {
     border: 1px solid black;
   }
   .container {
-    margin-top: 5rem;
+    margin-top: 2rem;
   }
 
   .filter {
