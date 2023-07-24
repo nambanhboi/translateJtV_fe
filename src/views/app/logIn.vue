@@ -103,8 +103,9 @@ export default {
         .post('/api/v1/token/login',forData)
         .then((response) => {
           // Xử lý phản hồi thành công
-          this.$router.push('/')
+          
           const token = response.data.auth_token
+          this.$router.push('/')
           this.$store.commit('setToken',token)
           axios.defaults.headers.common['Authorization']= 'Token' + token
           localStorage.setItem('token',response.data.token)

@@ -102,7 +102,7 @@
                         <input class="form-check-input" type="radio" name="report" id="flexRadioDefault4" value="Lỗi khác" v-model="report"/>
                         <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Lỗi khác</label>
                       </div>
-                      <button type="button" class="btn btn-primary" @click="submit1">Gửi</button>
+                      <button type="button" class="btn btn-primary" @click="submitReport">Gửi</button>
                     </div>
 
                     <div class="modal-body modal-bd3" v-if="selectedRadio ==='contribute'">
@@ -152,9 +152,9 @@ export default {
       contributeV: "",
     }
   },
+
   methods: {
-    
-    submit1() {
+    submitReport() {
       axios
       .post('/api/v1/app/Report/', {
         TypeName : this.report,
@@ -166,7 +166,7 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
-});
+      });
     }
   }
 };
