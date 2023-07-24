@@ -24,6 +24,7 @@
                         <template v-else>
                             <input type="'text" aria-label="First name" class="form-control"
                                 v-model="formStates[key]"
+                                :disabled="key=='paragraph'"
                             >
                         </template>
                     </div>
@@ -50,6 +51,7 @@ export default {
         const columnsRef = toRef(props, "columns");
         const formStates = toRef(props, "formState");
         const closeModal = ref(null);
+
 
         const [id, ...result] = columnsRef.value;
         newColumns.value = result;

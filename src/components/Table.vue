@@ -32,6 +32,11 @@
                     <template v-if="col?.type==='file'">
                         <img :src="row[col.name]" />
                     </template>
+                    <template v-else-if="col.name=='name'">
+                        <router-link :to="{name:'sentence_list', params: { id: row['id']}}">
+                            {{ row[col.name] }}
+                        </router-link>
+                    </template>
                     <template v-else>
                         {{ row[col.name] }}
                     </template>
@@ -68,7 +73,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import axios from 'axios';
 export default defineComponent({
     name: 'Table-',
-    props: ['columns', 'api'],
+    props: ['columns', 'api', 'idPara'],
     setup(props) {
         const resGetDataAll = ref([]);
         const resGetDataById = ref({});
@@ -81,7 +86,7 @@ export default defineComponent({
             .then(res => {
                 console.log(res.data)
                 resGetDataAll.value = res.data;
-                console.log(resGetDataAll.value)
+                console.log('1',resGetDataAll.value)
             })
             .catch(err => {
                 console.log(err)
@@ -99,6 +104,9 @@ export default defineComponent({
             console.log(id)
             for(let i in result) {
                 formState[i] = ""
+            }
+            if(props.idPara !== '') {
+                formState['paragraph'] = props.idPara
             }
             action.value = 'POST'
             console.log("newformState: ", formState);
@@ -142,6 +150,7 @@ export default defineComponent({
             console.log('run..');
             getData();
         }
+
         return {
             getData,
             resGetDataAll,
@@ -152,7 +161,8 @@ export default defineComponent({
             handleSave,
             handleAdd,
             action,
-            handleDelete
+            handleDelete,
+            
         }
     },
     mounted() {

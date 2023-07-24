@@ -40,10 +40,10 @@
             >
           </li>
           <li class="nav-item">
-            <router-link to="/report" class="router"
-              ><strong>Báo Cáo</strong></router-link
-            >
-              ><strong><i class="fa-solid fa-user"></i> <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link></strong></router-link>
+            <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link>
+          </li>
+          <li class="nav-item">
+            <i class="fa-solid fa-user"></i> <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
           </li>
         </ul>
       </div> 

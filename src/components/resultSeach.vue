@@ -8,7 +8,10 @@
         </div>
         <div class="resutlDes">
           <div class="column1">
-            <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{ sentence.sentenceJV }}</h2>
+            <h2><i class="fa-solid fa-headphones"
+               style="margin-right:5px;"
+              @click="handleRead(sentence.sentenceJV)"
+               ></i>{{ sentence.sentenceJV }}</h2>
             <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
           </div>
           <div class="column2">
@@ -41,6 +44,20 @@
 export default {
   name: "resultSearch",
   props:['sentenceList'],
+  setup() {
+    const handleRead = (sentenceJV) => {
+      console.log(sentenceJV)
+      const msg = new SpeechSynthesisUtterance();
+      msg.lang = 'ja'
+      msg.text = sentenceJV;
+
+      window.speechSynthesis.speak(msg)
+    }
+
+    return {
+      handleRead
+    }
+  }
 
 };
 </script>

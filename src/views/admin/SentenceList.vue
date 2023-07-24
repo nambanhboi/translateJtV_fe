@@ -3,18 +3,20 @@
         <Table- 
             :columns="columns"
             :api="api"
+            :idPara="idPara"
             />
     </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, toRef } from 'vue';
 
 
 export default defineComponent({
-    data() {
-        
-    },
-    setup() {
+    props: ['id'],
+    setup(props) {
+        console.log("id:  ",props.id)
+        const idPara = toRef(props, 'id')
+        console.log(idPara)
         const columns = [
             {
                 title: 'id',
@@ -53,13 +55,13 @@ export default defineComponent({
                 colspan: 4,
             },
         ];
-        const api = 'api/v1/admin/sentence_list';
+        const api = `api/v1/admin/paragraph_list/${props.id}/sentence_list`;
         
 
         return {
             columns,
             api,
-            
+            idPara
         }
 
     },
@@ -73,4 +75,33 @@ export default defineComponent({
     
 }
 </style>
+  
+
+   <!-- Trong Vue component -->
+<!-- <template>
+    <div>
+      <span @click="speakText">🔊</span>
+      <p>{{ textToSpeak }}</p>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        textToSpeak: "nam dẹp trai vai ò",
+      };
+    },
+    methods: {
+      speakText() {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = this.textToSpeak;
+        msg.lang = 'vi'
+  
+        // Kích hoạt tổng hợp giọng nói
+        window.speechSynthesis.speak(msg);
+      },
+    },
+  };
+  </script> -->
   
