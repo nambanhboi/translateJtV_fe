@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default createStore({
     state: {
-        // token: '',
+        token: '',
         // isAuthenticated: false,
         isLoggedIn: false,
         user: null,
@@ -41,7 +41,7 @@ export default createStore({
     actions:{
         async login({commit},credentials){
             try{
-            const response = await axios.post('/api/v1/token/login',credentials)
+            const response = await axios.post('/api/v1/app/login',credentials)
                 const user = response.data
                     // username: response.data.username
             

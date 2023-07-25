@@ -33,8 +33,8 @@
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="loginName">Email hoặc Tên người dùng</label>
-            <input type="text" id="loginName" class="form-control" placeholder="Nhập email hoặc Tên người dùng" v-model="username"/>
+            <label class="form-label" for="loginName">Tên người dùng</label>
+            <input type="text" id="loginName" class="form-control" placeholder="Nhập tên người dùng" v-model="username"/>
           </div>
           
 
@@ -79,6 +79,9 @@
 
 
 <script>
+import axios from 'axios'
+// import jwt_decode from 'jsonwebtoken';
+
 // import axios from "axios";
 
 export default {
@@ -94,11 +97,11 @@ export default {
     //    this.submitForm();
     // },
     methods: {
-      submitForm(){
-        // const forData ={
-        //   username:  this.username,
-        //   password:  this.password,
-        // }
+      async submitForm(){
+        const formData ={
+          username:  this.username,
+          password:  this.password,
+        }
       //   axios
       //   .post('/api/v1/token/login',{ username: this.username, password: this.password })
       //   .then((response) => {
@@ -119,11 +122,19 @@ export default {
       //     console.error(error);
       //   });
       // }
-      this.$store.dispatch('login',{username: this.username, password :this.password})
-      .then(()=>{
+      //this.$store.dispatch('login',{username: this.username, password :this.password})
+      await axios.post('/api/v1/app/login/', formData)
+      .then((res)=>{
+        console.log(res)
+        const accessToken = res.data.access_token
+        const refreshToken = res.data.refresh_token
+        console.log(accessToken, refreshToken)
+
+        //lưu accesstoken và refreshtoken, username(lấy từ formdata luôn) vào store
+
         this.$router.push('/')
-       localStorage.setItem("username", this.username);
-       console.log(this.username)
+      //  localStorage.setItem("username", this.username);
+      //  console.log(this.username)
 
       })
       .catch(error=>{

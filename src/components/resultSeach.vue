@@ -137,7 +137,7 @@ export default {
     return {
       handleRead
     }
-  }
+  },
 
   methods: {
     btn_comment(){
