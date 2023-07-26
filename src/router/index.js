@@ -19,6 +19,12 @@ const routes = [
         component: () => import("../views/admin/ParagraphList.vue"),
     },
     {
+        path: "/admin/paragraph_list/:id/sentence_list",
+        name: "sentence_list",
+        component: () => import("../views/admin/SentenceList.vue"),
+        props: true
+    },
+    {
         path: "/login",
         name: "login",
         component: () => import("../views/app/logIn.vue"),
