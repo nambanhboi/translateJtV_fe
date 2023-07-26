@@ -121,8 +121,8 @@ export default {
       // }
       this.$store.dispatch('login',{username: this.username, password :this.password})
       .then(()=>{
-        this.$router.push('/')
        localStorage.setItem("username", this.username);
+       this.$router.push('/')
        console.log(this.username)
 
       })
