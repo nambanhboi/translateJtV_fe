@@ -41,8 +41,8 @@
             <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link>
             <i class="fa-solid fa-user" @click="togglDisplay"></i> 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
-              <div class="loggedIn" v-if="user" >
-                <p>{{ user.username}}</p>
+              <div class="loggedIn" v-if="isLoggedIn" >
+                <p>{{ username}}</p>
               </div>
               <div class="logIn-register" v-else>
                 <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
@@ -54,6 +54,11 @@
   </nav>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
 export default {
     name: 'Header-',
     // props: ['users'],
@@ -91,14 +96,21 @@ export default {
   //    return localStorage.getItem("username", this.username);
   //      },
     computed:{
-      user(){
-        return this.$store.getters.user;
-      },
-      username(){
-        return this.$store.getters.username;
-      },
+      ...mapGetters(['isLoggedIn']),
+    },
+    getUsername(){
+
+      const store = useStore();
+      const route = useRoute();
+
+
+      store.dispatch("fetchUsername",{ id:route.params.id});
+      return {
+        user: computed(() => store.state.user),
+      }
     },
     methods:{
+      
       logout(){
         this.$store.dispatch('logout');
         this.$router.push('/login')

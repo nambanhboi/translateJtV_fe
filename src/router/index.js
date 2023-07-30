@@ -1,4 +1,3 @@
-import store from "@/store";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -48,7 +47,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to,from,next)=>{
-    const isLoggedIn = store.getters.isLoggedIn
+    const isLoggedIn = function checkUserLoggedIn() {
+        // Lấy trạng thái isLoggedIn từ Vuex store
+        const isLoggedIn = this.$store.getters.isLoggedIn;
+      
+        // Trả về giá trị của trạng thái isLoggedIn
+        return isLoggedIn;
+      }
     if(to.meta.requiresAuth && !isLoggedIn){
         next('/login');
     }

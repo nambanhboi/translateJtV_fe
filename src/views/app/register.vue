@@ -77,8 +77,7 @@
 
 </template>
 <script>
-  import axios from "axios";
-
+import axios from 'axios';
 export default {
     name: 'register-',
     data() {
@@ -87,35 +86,16 @@ export default {
         password: '',
       }
     },
-    // mounted() {
-    //    this.submitForm();
-    // },
+    mounted() {
+       this.submitForm();
+    },
     methods: {
-      // submitForm(){
-      //   const forData ={
-      //     username:  this.username,
-      //     password:  this.password,
-      //   }
-      //   axios
-      //   .post('/api/v1/users/',forData)
-      //   .then((response) => {
-      //     // Xử lý phản hồi thành công
-      //     this.$router.push('/login')
-      //     alert('Đăng ký thành công!');
-      //     console.log(response);
-      //   })
-      //   .catch((error) => {
-      //     // Xử lý lỗi
-      //     console.error(error);
-      //     console.log('lỗi rồi')
-      //   });
-      // }
       submitForm(){
-        const user ={
+        const credentials ={
           username: this.username,
           password: this.password,
         };
-        axios.post('/api/v1/app/register/',user)
+        axios.post('http://127.0.0.1:8000/api/v1/app/user/',credentials)
         .then(response =>{
           console.log('Đăng ký thành công!',response.data)
           this.$router.push('/login')
