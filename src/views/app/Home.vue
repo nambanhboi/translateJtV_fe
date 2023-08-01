@@ -102,7 +102,7 @@ export default {
 
     filterTopic(topic) {
       axios
-        .get(`/api/v1/app/sentence_list/?search=${this.searchQuery},${topic.topic}`)
+        .get(`/api/v1/app/sentence_list/?search=${this.searchQuery},${topic.topic} `)
         .then((response) => {
           this.sentenceList = response.data;
         })

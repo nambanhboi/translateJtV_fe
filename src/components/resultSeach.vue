@@ -158,10 +158,15 @@ export default {
 
   methods: {
     submitReport() {
+
       axios
         .post('/api/v1/app/Report/', {
           TypeName: this.report,
           // User: 
+        // }, {
+        //   headers: {
+        //     Authorization: `Token ${accessToken}`, // Gửi accessToken trong tiêu đề yêu cầu
+        //   },
         })
         .then(function () {
           alert('thành công!');
