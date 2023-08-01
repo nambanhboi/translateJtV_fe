@@ -4,55 +4,68 @@ import axios from 'axios'
 export default createStore({
     state: {
         token: '',
-        // isAuthenticated: false,
+        isAuthenticated: false,
         isLoggedIn: false,
         user: null,
+        accessToken: null,
+        refreshToken: null,
+        username: null,
+        sentence: null
     },
     mutations: {
-        // initializeStore(state){
-        //     if( localStorage.getItem('token')){
-        //         state.token + localStorage.getItem('token')
-        //         state.isAuthenticated = false 
-        //     }else{
-        //         state.token='';
-        //         state.isAuthenticated = false
-        //     }
+        initializeStore(state){
+            if( localStorage.getItem('username')){
+                state.username + localStorage.getItem('username')
+                state.isAuthenticated = false 
+            }else{
+                state.username='';
+                state.isAuthenticated = false
+            }
             
-        // },
-        // setToken(state,token){
-        //     state.token = token
-        //     state.isAuthenticated = true
-        // },
-        // removeToken(state){
-        //     state.token = '';
-        //     state.isAuthenticated = false
-        // },
-        SET_LOGIN(state,user,username){
+        },
+        setToken(state,username ){
+            state.username= username
+            state.isAuthenticated = true
+        },
+        removeToken(state){
+            state.token = '';
+            state.isAuthenticated = false
+        },
+        SET_LOGIN(state){
             state.isLoggedIn = true;
-            state.user = user
-            state.username = username
         },
         SET_LOGOUT(state){
             state.isLoggedIn = false;
             state.user = null;
             state.username = null
+            state.accessToken = null
+        },
+        setSentence(state,sentencePayload){
+            state.sentence = sentencePayload
+        },
+        setUsername(state,sentencePayload){
+            state.username = sentencePayload
         }
     },
     actions:{
         async login({commit},credentials){
             try{
-            const response = await axios.post('/api/v1/app/login',credentials)
-                const user = response.data
-                    // username: response.data.username
-            
+                const response = await axios.post('/api/v1/token/login',credentials)
+                const username = response.data.auth_token
+                commit('setToken',username)
+                axios.defaults.headers.common['Authorization'] = 'username' + username
+                localStorage.setItem("username",username)
+                const user = response.data;
                 commit('SET_LOGIN',user)
-                localStorage.setItem('user',JSON.stringify(user))
+                console.log(credentials)
+
             }catch(error){
                 console.error(error)
                 throw error
             }
         },
         logout({commit}){
+            localStorage.removeItem('access_token');
             commit('SET_LOGOUT')
             localStorage.removeItem('user')
         },
@@ -62,13 +75,28 @@ export default createStore({
                 commit("SET_LOGIN",user)
             }
         },
+
+        async fetchSentence({commit},{ id }){
+            const res = await axios.get("http://127.0.0.1:8000/api/v1/admin/sentence_list" + '/'+ id+ '/')
+            const data = await res.data
+        
+            commit("setSentence",data)
+        },
+
+        async getUsername({commit},{id}){
+            const res = await axios.get("http://127.0.0.1:8000/api/v1/app/user"+ '/'+ id+ '/')
+            const data = await res.data
+        
+            commit("setUsername",data)
+        },
     },
     modules: {
         
     },
     getters:{
+        getAccessToken: state => state.accessToken,
+        getRefreshToken: state => state.refreshToken,
         isLoggedIn: state => state.isLoggedIn,
-        user: state =>state.user,
-        username: (state) => (state.user ? state.user.username : null),
+
     }
 })

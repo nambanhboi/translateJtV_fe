@@ -1,6 +1,6 @@
 <template>
-  <Header :users="users" />
-    <router-view :users="users" />
+  <Header />
+    <router-view/>
   <Footer />
 </template>
 
@@ -36,9 +36,9 @@ export default {
   },
     beforeCreate(){
     this.$store.commit('initializeStore')
-    const token = this.$store.state.token
-    if(token){
-      axios.defaults.headers.common['Authorization'] = 'Token' + token
+    const username = this.$store.state.username
+    if(username){
+      axios.defaults.headers.common['Authorization'] = 'username' + username
     }
     else{
       axios.defaults.headers.common['Authorization'] = ''

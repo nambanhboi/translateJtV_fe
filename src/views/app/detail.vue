@@ -1,15 +1,14 @@
 <template>
     <div class="show-comments">
-      <h1>hello</h1>
-      <div class="container-comments" >
+      <div class="container-comments" v-if="sentence">
         <div class="resutlContent" >
           <div class="resutlImg">
-            <img :src=" sentence.image" >
+            <img :src="sentence.image" >
           </div>
           <div class="resutlDes">
             <div class="column1">
               <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{  sentence.sentenceJV }}</h2>
-              <p style="font-size:1.5rem; margin-bottom:0;">{{  sentence.sentenceVN }}</p>
+              <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
             </div>
             <div class="column2">
               <div class="detail">
@@ -30,10 +29,10 @@
         <hr>
         <form >
           <div class="list-comments">
-            <div class="input-comment">
+            <form class="input-comment" @submit.prevent="submitComment">
               <input type="text" id="comment" class="form-control" placeholder="Nhập bình luận" v-model="description" />
-              <button type="submit" class="btn-comment" >Bình Luận</button>
-            </div>
+              <button type="submit" class="btn-comment" @click="submitComment">Bình Luận</button>
+            </form>
             <!-- <div class="display-cmts">
               {{users.username}}  
               {{comments.description}} 
@@ -45,39 +44,56 @@
   </template>
   
   <script>
-
-import axios from "axios";
-// import { onMounted } from 'vue'
-
-import { defineComponent } from "vue"
-
-    
-  export default defineComponent({
-    name: "detail-",
-    props: ['id'],
-    data() {
-      return {
-        sentence: [],
-      }
-    },
-    mounted() {
-     
-    },
-    // mounted((id) => {
-    //   // const sentence = ref({})
-    //   // axios.get(`/api/v1/app/sentence_list/${id}`)
-    //   .then((response) => {
-    //   // sentence.value = data.sentenceList[0] || {}
-    //   this.sentence = response.data
-    // })
-    // }),
-    setup(props){
-      axios.get(`/api/v1/app/sentence_list/${props.id}`)
-      return {
-
-      }
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+export default {
+  name: 'detail-',
+  data(){
+    return{
+      description: ''
     }
-  })
+  },
+  setup(){
+    const route = useRoute();
+    const store = useStore();
+
+    store.dispatch("fetchSentence",{ id:route.params.id});
+
+    return {
+      sentence: computed(() => store.state.sentence),
+    }
+  },
+  computed: {
+    sentenceVN() {
+      // Câu hỏi hiện tại được tính toán từ một nguồn nào đó, ví dụ Vuex store
+      return this.$store.state.sentence.id;
+    },
+    user() {
+      // Người dùng hiện tại được tính toán từ một nguồn nào đó, ví dụ Vuex store
+      return this.$store.state.user.username;
+    },
+  },
+  methods: {
+    submitComment(){
+      const Comment ={
+        description: this.description,
+        sentence: this.sentenceVN,
+        user: this.username,
+      };
+      axios.post('/api/v1/app/comment/',Comment)
+        .then(response =>{
+          console.log('Comment thành công!',response.data)
+        })
+        .catch(error => {
+          console.error(error)
+          console.log("đăng ký lỗi rồi")
+        })
+    }
+  }
+}
+
   </script>
   
 <style scoped>

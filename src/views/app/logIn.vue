@@ -17,7 +17,7 @@
 <!-- Pills content -->
     <div class="tab-content">
       <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="login">
           <div class="text-center mb-3">
             <p>Đăng nhập với:</p>
             <button type="button" class="btn btn-link btn-floating mx-1 icon-fb">
@@ -61,7 +61,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-4 btn-login" @click="submitForm">Đăng Nhập</button>
+          <button type="submit" class="btn btn-primary btn-block mb-4 btn-login" @click="login">Đăng Nhập</button>
 
           <!-- Register buttons -->
           <div class="text-center">
@@ -79,11 +79,6 @@
 
 
 <script>
-import axios from 'axios'
-// import jwt_decode from 'jsonwebtoken';
-
-// import axios from "axios";
-
 export default {
     name: 'login-',
     data() {
@@ -92,55 +87,39 @@ export default {
         password: '',
       }
     },
-
-    // mounted() {
-    //    this.submitForm();
-    // },
+    computed: {
+    user() {
+      // Người dùng hiện tại được tính toán từ một nguồn nào đó, ví dụ Vuex store
+      return this.$store.state.user.id;
+    },
+  },
     methods: {
-      async submitForm(){
-        const formData ={
+      async login(){
+        const credentials ={
           username:  this.username,
           password:  this.password,
         }
-      //   axios
-      //   .post('/api/v1/token/login',{ username: this.username, password: this.password })
-      //   .then((response) => {
-      //     // Xử lý phản hồi thành công
-      //     console.log(response.data)
-      //     localStorage.setItem('username',response.data.username)
-      //     const token = response.data.auth_token
-      //     this.$store.commit('setToken',token)
-      //     axios.defaults.headers.common['Authorization']= 'Token' + token
-      //     localStorage.setItem('token',response.data.token)
-      //     localStorage.setItem("username", this.username);
-      //     console.log('username')
-      //     this.$router.push('/')
+        try {
+        await this.$store.dispatch("login", credentials);
+        // Nếu không có lỗi, chuyển hướng đến trang '/' sau khi đăng nhập thành công
 
-      //   })
-      //   .catch((error) => {
-      //     // Xử lý lỗi
-      //     console.error(error);
-      //   });
-      // }
-      //this.$store.dispatch('login',{username: this.username, password :this.password})
-      await axios.post('/api/v1/app/login/', formData)
-      .then((res)=>{
-        console.log(res)
-        const accessToken = res.data.access_token
-        const refreshToken = res.data.refresh_token
-        console.log(accessToken, refreshToken)
-
-        //lưu accesstoken và refreshtoken, username(lấy từ formdata luôn) vào store
-
-        this.$router.push('/')
-      //  localStorage.setItem("username", this.username);
-      //  console.log(this.username)
-
-      })
-      .catch(error=>{
-        console.error(error)
-        console.log('Lỗi rồi đăng nhập!')
-      })
+          this.$router.push('/');
+        } catch (error) {
+        console.error(error);
+        console.log('Lỗi rồi đăng nhập!');
+      }
+      //   await axios.post('/api/v1/token/login/', formData)
+      // .then((res)=>{
+      //   console.log(res);
+      //   const username = formData.username;
+      //   console.log(username)
+      //   localStorage.setItem('user',res.data)
+      //   this.$router.push('/')
+      // })
+      // .catch(error=>{
+      //   console.error(error)
+      //   console.log('Lỗi rồi đăng nhập!')
+      // })
     },
   }
 }
