@@ -42,7 +42,7 @@
             <i class="fa-solid fa-user" @click="togglDisplay"></i> 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
               <div class="loggedIn" v-if="isLoggedIn" >
-                <p>{{ username}}</p>
+                <p>{{ user.username}}</p>
               </div>
               <div class="logIn-register" v-else>
                 <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>

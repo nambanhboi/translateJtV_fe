@@ -95,7 +95,7 @@ export default {
           username: this.username,
           password: this.password,
         };
-        axios.post('http://127.0.0.1:8000/api/v1/app/user/',credentials)
+        axios.post('http://127.0.0.1:8000/api/v1/app/signup',credentials)
         .then(response =>{
           console.log('Đăng ký thành công!',response.data)
           this.$router.push('/login')
