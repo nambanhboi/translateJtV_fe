@@ -53,7 +53,7 @@ export default createStore({
                 const response = await axios.post('/api/v1/token/login',credentials)
                 const username = response.data.auth_token
                 commit('setToken',username)
-                axios.defaults.headers.common['Authorization'] = 'username' + username
+                // axios.defaults.headers.common['Authorization'] = 'username' + username
                 localStorage.setItem("username",username)
                 const user = response.data;
                 commit('SET_LOGIN',user)
