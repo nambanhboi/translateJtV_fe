@@ -50,7 +50,12 @@ export default createStore({
     actions:{
         async login({commit},credentials){
             try{
-                const response = await axios.post('/api/v1/token/login',credentials)
+                const response = await axios.post('/api/v1/app/login',credentials,{
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                })
                 const username = response.data.auth_token
                 commit('setToken',username)
                 // axios.defaults.headers.common['Authorization'] = 'username' + username
@@ -64,6 +69,7 @@ export default createStore({
                 throw error
             }
         },
+        
         logout({commit}){
             localStorage.removeItem('access_token');
             commit('SET_LOGOUT')
