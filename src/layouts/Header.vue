@@ -42,7 +42,7 @@
             <i class="fa-solid fa-user" @click="togglDisplay"></i> 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
               <div class="loggedIn" v-if="isLoggedIn" >
-                <p>{{ username}}</p>
+                <p>{{ username }}</p>
               </div>
               <div class="logIn-register" v-else>
                 <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
@@ -55,67 +55,35 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { useStore } from 'vuex';
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
 export default {
     name: 'Header-',
-    // props: ['users'],
-  //   computed: {
-  //   savedUsername() {
-  //     // Get the saved username from localStorage
-  //     return localStorage.getItem("username");
-  //   },
-
-  //   data() {
-  //     return {
-  //       showLogOut: false
-  //     }
-  //   },
-  //   methods: {
-  //     togglDisplay(){
-  //       console.log('clickrooine')
-  //       this.showLogOut = !this.showLogOut
-  //     },
-  //     logOut(){
-  //       console.log('clickrooine')
-  //       localStorage.removeItem("username");
-    
-  //   // Hoặc xóa toàn bộ dữ liệu localStorage (tùy chọn nếu bạn lưu thông tin khác nữa)
-  //   // localStorage.clear();
-
-  //   // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chủ
-  //   // Ví dụ:
-  //     this.$router.push('/login');
-  //     }
-  //   },
-  // }
-  //     savedUsername() {
-  // //     Get the saved username from localStorage
-  //    return localStorage.getItem("username", this.username);
-  //      },
-    computed:{
-      ...mapGetters(['isLoggedIn']),
-    },
-    getUsername(){
-
-      const store = useStore();
-      const route = useRoute();
-
-
-      store.dispatch("fetchUsername",{ id:route.params.id});
+    data() {
       return {
-        user: computed(() => store.state.user),
+        showLogOut: false
       }
     },
-    methods:{
-      
-      logout(){
+    created() {
+      // Gọi phương thức initializeStore để khởi tạo giá trị username từ localStorage
+      this.$store.commit('initializeStore');
+      console.log(this.$store.state.user);
+    },
+    computed: {
+      ...mapGetters(['isLoggedIn']),
+      username() {
+        return this.$store.state.username;
+      },
+    },
+
+    methods: {
+      logout() {
         this.$store.dispatch('logout');
-        this.$router.push('/login')
+        this.$router.push('/login');
+      },
+      togglDisplay() {
+        this.showLogOut = !this.showLogOut;
       }
-    }
+    },
 };
 </script>
 <style>
