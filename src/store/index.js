@@ -56,13 +56,14 @@ export default createStore({
                     }
 
                 })
-                const username = response.data.auth_token
-                commit('setToken',username)
-                axios.defaults.headers.common['Authorization'] = 'username' + username
-                localStorage.setItem("username",username)
-                const user = response.data;
-                commit('SET_LOGIN',user)
-                console.log(credentials)
+                console.log(response.data, commit)
+                // const username = response.data.auth_token
+                // commit('setToken',username)
+                // axios.defaults.headers.common['Authorization'] = 'username' + username
+                // localStorage.setItem("username",username)
+                // const user = response.data;
+                // commit('SET_LOGIN',user)
+                // console.log(credentials)
 
             }catch(error){
                 console.error(error)

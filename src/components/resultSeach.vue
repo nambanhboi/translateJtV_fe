@@ -161,7 +161,6 @@ export default {
       axios
         .post('/api/v1/app/Report/', {
           TypeName: this.report,
-          // User: 
         })
         .then(function () {
           alert('thành công!');

@@ -69,7 +69,7 @@ export default {
   methods: {
     search() {
       axios
-        .get(`/api/v1/app/sentence_list/?search=${this.searchQuery}`)
+        .get(`/api/v1/app/sentence_list?search=${this.searchQuery}`)
         .then((response) => {
           this.sentenceList = response.data;
         })
@@ -80,7 +80,7 @@ export default {
 
     getTopicList() {
       axios
-        .get('/api/v1/app/sentence_list/')
+        .get('/api/v1/app/sentence_list')
         .then((response) => {
           this.topicList = response.data;
         })
@@ -91,7 +91,7 @@ export default {
 
     getStyleList() {
       axios
-        .get('/api/v1/app/sentence_list/')
+        .get('/api/v1/app/sentence_list')
         .then((response) => {
           this.styleList = response.data;
         })
@@ -102,7 +102,7 @@ export default {
 
     filterTopic(topic) {
       axios
-        .get(`/api/v1/app/sentence_list/?search=${this.searchQuery},${topic.topic} `)
+        .get(`/api/v1/app/sentence_list?search=${this.searchQuery},${topic.topic} `)
         .then((response) => {
           this.sentenceList = response.data;
         })
@@ -113,7 +113,7 @@ export default {
 
     filterStyle(style) {
       axios
-        .get(`/api/v1/app/sentence_list/?search=${this.searchQuery},${style.style}`)
+        .get(`/api/v1/app/sentence_list?search=${this.searchQuery},${style.style}`)
         .then((response) => {
           this.sentenceList = response.data;
         })
