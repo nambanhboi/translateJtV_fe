@@ -6,7 +6,8 @@ export default createStore({
     isLoggedIn: false,
     accessToken: null,
     username: null,
-    sentence: null
+    sentence: null,
+    user:null
   },
   mutations: {
     initializeStore(state) {
@@ -19,6 +20,12 @@ export default createStore({
       state.accessToken = accessToken;
       localStorage.setItem('token', accessToken)
     },
+    setId(state,user)
+    {
+      state.user = user;
+      localStorage.setItem("user", user)
+    },
+
     clearToken(state) {
       state.accessToken = null;
       localStorage.removeItem('token')
@@ -52,6 +59,7 @@ export default createStore({
         const username = response.data.user.username;
         const accessToken = response.data.token.access;
         commit('setToken', accessToken);
+        commit('setId', response.data.user)
         // axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         commit('SET_LOGIN', username);
 
@@ -81,6 +89,7 @@ export default createStore({
   getters: {
     getAccessToken: state => state.accessToken,
     isLoggedIn: state => state.isLoggedIn,
-    username: state => state.username
+    username: state => state.username,
+    getUserId: state => state.user ? state.user.id : null,
   }
 });
