@@ -11,7 +11,7 @@
             <h2><i class="fa-solid fa-headphones"
                style="margin-right:5px;"
               @click="handleRead(sentence.sentenceJV)"
-               ></i>{{ sentence.sentenceJV }}</h2>
+               ></i>{{ sentence.sentenceJV }} </h2>
             <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
           </div>
           <div class="column2">
@@ -47,7 +47,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo
+                        <i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo 
                       </h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -56,8 +56,7 @@
                       <div class="form-check">
                         <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault1" value="report"
                           v-model="selectedRadio" />
-                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi
-                          sai của câu </label>
+                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi sai của câu </label>
                       </div>
 
                       <!-- Default checked radio -->
@@ -95,7 +94,7 @@
                           v-model="report" />
                         <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Lỗi khác</label>
                       </div>
-                      <button type="button" class="btn btn-primary" @click="submitReport">Gửi</button>
+                      <button type="button" class="btn btn-primary" @click="submitReport(sentence.id)">Gửi {{ sentence.id }}</button>
                     </div>
 
                     <div class="modal-body modal-bd3" v-if="selectedRadio === 'contribute'">
@@ -129,6 +128,8 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
+// import store from '../store/index.js'
 // import axios from "axios";
 export default {
   name: "resultSearch",
@@ -139,6 +140,7 @@ export default {
       report: "",
       contributeJ: "",
       contributeV: "",
+      
     }
   },
   setup() {
@@ -156,12 +158,19 @@ export default {
     }
   },
 
+  computed:{
+    ...mapGetters(['getUserId']),
+  },
+
   methods: {
-    submitReport() {
-      axios
-        .post('/api/v1/app/Report/', {
-          TypeName: this.report,
-          // User: 
+    submitReport(id) {
+      const userId = this.getUserId
+        console.log(id)
+        axios
+        .post('/api/v1/app/report', {
+          typeName: this.report,
+          user: userId,
+          sentenceId: id,
         })
         .then(function () {
           alert('thành công!');
