@@ -7,11 +7,11 @@ const routes = [
         component: () => import("../views/app/Home.vue"),
         // meta:{requiresAuth: true}
     },
-    {
-        path: "/report",
-        name: "report",
-        component: () => import("../views/app/ReportTest.vue"),
-    },
+    // {
+    //     path: "/report",
+    //     name: "report",
+    //     component: () => import("../views/app/ReportTest.vue"),
+    // },
     {
         path: "/admin/paragraph_list",
         name: "paragraph_list",

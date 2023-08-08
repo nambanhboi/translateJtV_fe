@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <i class="fas fa-bars btn-admin" ></i>
+            <!-- <i class="fas fa-bars btn-admin" ></i> -->
 
             <router-link to="/" class="router"
               ><strong>Trang Chủ</strong></router-link
@@ -30,16 +30,16 @@
           </li>
           <li class="nav-item">
             <router-link to="/admin/paragraph_list" class="router"
-              ><strong>Quản lý đoạn</strong></router-link
+              ><strong> &nbsp; &nbsp;Quản lý đoạn </strong></router-link
             >
           </li>
           <li class="nav-item">
             <router-link to="/admin/sentence_list" class="router"
-              ><strong>Quản lý câu</strong></router-link>
+              ><strong>&nbsp; &nbsp;Quản lý câu&nbsp; &nbsp; &nbsp;</strong></router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link>
-            <i class="fa-solid fa-user" @click="togglDisplay"></i> 
+            <!-- <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link> -->
+            <i class="fa-solid fa-user" @click="togglDisplay"></i>&nbsp; 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
               <div class="loggedIn" v-if="isLoggedIn" >
                 <p>{{ username }}</p>
