@@ -42,7 +42,7 @@
             <i class="fa-solid fa-user" @click="togglDisplay"></i> 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
               <div class="loggedIn" v-if="isLoggedIn" >
-                <p>{{ user.username }}</p>
+                <p>{{ username }}</p>
               </div>
               <div class="logIn-register" v-else>
                 <router-link to="/login" class="nav-logIn" >Đăng Nhập</router-link>/ <router-link to="/register" class="signUp">Đăng Ký</router-link>
@@ -66,12 +66,12 @@ export default {
     created() {
       // Gọi phương thức initializeStore để khởi tạo giá trị username từ localStorage
       this.$store.commit('initializeStore');
-      console.log(this.$store.state.user);
+      console.log(this.$store.state.username);
     },
     computed: {
       ...mapGetters(['isLoggedIn']),
       username() {
-        return this.$store.state.user;
+        return this.$store.state.username;
       },
     },
 

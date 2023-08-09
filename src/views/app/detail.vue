@@ -47,6 +47,8 @@
 import { useStore } from 'vuex';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { mapGetters } from 'vuex';
+
 import axios from 'axios';
 export default {
   name: 'detail-',
@@ -58,23 +60,26 @@ export default {
   setup(){
     const route = useRoute();
     const store = useStore();
-
-    store.dispatch("fetchSentence",{ id:route.params.id});
-
+    
+    store.dispatch("fetchSentence",route.params.id);
+    console.log(route.params.id)
     return {
       sentence: computed(() => store.state.sentence),
     }
   },
+    created() {
+      this.$store.commit('initializeStore');
+    },
   computed: {
     sentenceVN() {
-      // Câu hỏi hiện tại được tính toán từ một nguồn nào đó, ví dụ Vuex store
       return this.$store.state.sentence.id;
     },
-    user() {
-      // Người dùng hiện tại được tính toán từ một nguồn nào đó, ví dụ Vuex store
-      return this.$store.state.user.username;
+    username() {
+      return this.$store.state.username;
     },
+    ...mapGetters(['getAccessToken'])
   },
+
   methods: {
     submitComment(){
       const Comment ={
@@ -82,14 +87,23 @@ export default {
         sentence: this.sentenceVN,
         user: this.username,
       };
-      axios.post('/api/v1/app/comment/',Comment)
-        .then(response =>{
-          console.log('Comment thành công!',response.data)
-        })
-        .catch(error => {
-          console.error(error)
-          console.log("đăng ký lỗi rồi")
-        })
+      try
+        {
+          const res = axios.post('api/v1/app/comment', Comment, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${this.getAccessToken}`
+            }
+          })
+          console.log(res)
+          console.log('Comment thành công!')
+
+        }
+        catch(err) {
+          console.log(err)
+          console.log('Comment lỗi!')
+
+        }
     }
   }
 }
