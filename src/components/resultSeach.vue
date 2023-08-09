@@ -8,10 +8,8 @@
         </div>
         <div class="resutlDes">
           <div class="column1">
-            <h2><i class="fa-solid fa-headphones"
-               style="margin-right:5px;"
-              @click="handleRead(sentence.sentenceJV)"
-               ></i>{{ sentence.sentenceJV }} </h2>
+            <h2><i class="fa-solid fa-headphones" style="margin-right:5px; cursor: pointer;"
+                @click="handleRead(sentence.sentenceJV)"></i>{{ sentence.sentenceJV }} </h2>
             <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
           </div>
           <div class="column2">
@@ -36,7 +34,7 @@
               </div>
             </div>
             <div class="column3Right">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="currentSentenceId = sentence.id">
                 <i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo
               </button>
 
@@ -56,7 +54,8 @@
                       <div class="form-check">
                         <input class="btn-check" type="radio" name="baocao" id="flexRadioDefault1" value="report"
                           v-model="selectedRadio" />
-                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi sai của câu </label>
+                        <label class="btn btn-secondary" for="flexRadioDefault1" style="font-size:1.5rem;"> Báo cáo lỗi
+                          sai của câu </label>
                       </div>
 
                       <!-- Default checked radio -->
@@ -94,7 +93,7 @@
                           v-model="report" />
                         <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.5rem;">Lỗi khác</label>
                       </div>
-                      <button type="button" class="btn btn-primary" @click="submitReport(sentence.id)">Gửi {{ sentence.id }}</button>
+                      <button type="button" class="btn btn-primary" @click="submitReport(currentSentenceId)">Gửi </button>
                     </div>
 
                     <div class="modal-body modal-bd3" v-if="selectedRadio === 'contribute'">
@@ -103,7 +102,7 @@
                       <form action="" class="formInModal">
                         <input type="text" name="" placeholder="Câu tiếng nhật" v-model="contributeJ">
                         <input type="text" name="" placeholder="Câu tiếng Việt tương ứng" v-model="contributeV">
-                        <button type="button" class="btn btn-primary">Gửi</button>
+                        <button type="button" class="btn btn-primary" @click="submitContribute()">Gửi</button>
                       </form>
 
                     </div>
@@ -130,7 +129,6 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 // import store from '../store/index.js'
-// import axios from "axios";
 export default {
   name: "resultSearch",
   props: ['sentenceList'],
@@ -140,7 +138,7 @@ export default {
       report: "",
       contributeJ: "",
       contributeV: "",
-      
+      currentSentenceId:null,
     }
   },
   setup() {
@@ -152,33 +150,51 @@ export default {
 
       window.speechSynthesis.speak(msg)
     }
-
     return {
       handleRead
     }
   },
 
-  computed:{
+  computed: {
     ...mapGetters(['getUserId']),
   },
 
   methods: {
-    submitReport(id) {
-      const userId = this.getUserId
-        console.log(id)
-        axios
+    submitReport(currentSentenceId) {
+      const userId = this.getUserId;
+      console.log(userId)
+      axios
         .post('/api/v1/app/report', {
           typeName: this.report,
           user: userId,
-          sentenceId: id,
+          sentenceId: currentSentenceId,
         })
         .then(function () {
           alert('thành công!');
-          console.log(this.report);
         })
         .catch(function (error) {
+          alert("báo cáo thất bại!");
           console.log(error);
         });
+    },
+    submitContribute(){
+      const userId = this.getUserId;
+      console.log(userId)
+      console.log(this.contributeJ)
+      console.log(this.contributeV)
+      axios
+      .post('/api/v1/app/contribute',{
+        user : userId,
+        sentenceVn: this.contributeV,
+        sentenceJv: this.contributeJ
+      })
+      .then(function () {
+        alert("Thành công!");
+      })
+      .catch(function (error){
+        alert("báo cáo thất bại!");
+        console.log(error);
+      })
     },
 
     btn_comment() {
