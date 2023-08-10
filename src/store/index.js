@@ -47,6 +47,7 @@ export default createStore({
       state.sentence = sentencePayload;
     },
   },
+ 
   actions: {
     async login({ commit }, credentials) {
       try {
@@ -68,7 +69,12 @@ export default createStore({
         throw error;
       }
     },
-
+    checkLoggedIn({commit}){
+        const user = JSON.parse(localStorage.getItem('user'))
+        if(user){
+            commit("SET_LOGIN",user)
+        }
+    },
     logout({ commit }) {
       commit('clearToken');
       commit('SET_LOGOUT');
@@ -76,7 +82,7 @@ export default createStore({
 
     async fetchSentence({ commit }, id) {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/v1/admin/sentence_list/${id}`);
+        const res = await axios.get(`http://127.0.0.1:8000/api/v1/app/sentence_list/${id}`);
         const data = res.data;
         commit('setSentence', data);
       } catch (error) {

@@ -66,7 +66,7 @@ export default {
     created() {
       // Gọi phương thức initializeStore để khởi tạo giá trị username từ localStorage
       this.$store.commit('initializeStore');
-      console.log(this.$store.state.user);
+      console.log(this.$store.state.username);
     },
     computed: {
       ...mapGetters(['isLoggedIn']),
