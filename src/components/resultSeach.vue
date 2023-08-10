@@ -179,9 +179,6 @@ export default {
     },
     submitContribute(){
       const userId = this.getUserId;
-      console.log(userId)
-      console.log(this.contributeJ)
-      console.log(this.contributeV)
       axios
       .post('/api/v1/app/contribute',{
         user : userId,
