@@ -33,12 +33,16 @@
               <input type="text" id="comment" class="form-control" placeholder="Nhập bình luận" v-model="description" />
               <button type="submit" class="btn-comment" @click="submitComment">Bình Luận</button>
             </form>
-            <!-- <div class="display-cmts">
-              {{users.username}}  
-              {{comments.description}} 
-            </div> -->
           </div>
         </form>
+        <div class="showComments">
+          <ul>
+            <li class="comment" v-for="(comment, id) in comments" :key="id">
+              {{ username }}
+              {{ comment }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </template>
@@ -47,7 +51,7 @@
 import { useStore } from 'vuex';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import axios from 'axios';
 export default {
@@ -62,13 +66,19 @@ export default {
     const store = useStore();
     
     store.dispatch("fetchSentence",route.params.id);
-    console.log(route.params.id)
     return {
       sentence: computed(() => store.state.sentence),
     }
   },
     created() {
       this.$store.commit('initializeStore');
+    },
+    createdComments() {
+      const store = useStore();
+      store.dispatch("fetchComments");
+      return {
+      comments: computed(() => store.state.comments),
+      }
     },
   computed: {
     sentenceVN() {
@@ -77,33 +87,32 @@ export default {
     username() {
       return this.$store.state.username;
     },
-    ...mapGetters(['getAccessToken'])
+    comment() {
+      return this.$store.state.comments.description;
+    },
+    ...mapGetters(['getUserId']),
+    ...mapGetters(['getComments']),
   },
 
   methods: {
+    ...mapActions(['fetchComments']),
+    
     submitComment(){
       const Comment ={
         description: this.description,
         sentence: this.sentenceVN,
-        user: this.username,
+        user: this.getUserId,
       };
-      try
-        {
-          const res = axios.post('api/v1/app/comment', Comment, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${this.getAccessToken}`
-            }
-          })
-          console.log(res)
-          console.log('Comment thành công!')
-
-        }
-        catch(err) {
-          console.log(err)
-          console.log('Comment lỗi!')
-
-        }
+      
+      axios
+      .post('api/v1/app/comment', Comment)
+        .then(function(){
+          alert('Comment thành công!')
+        })
+      
+        .catch(function() {
+        console.log('Comment lỗi!')
+        })
     }
   }
 }

@@ -7,8 +7,10 @@ export default createStore({
     accessToken: null,
     username: null,
     sentence: null,
-    user:null
+    user:null,
+    comments: null,
   },
+
   mutations: {
     initializeStore(state) {
       const storedUsername = localStorage.getItem('username');
@@ -16,20 +18,23 @@ export default createStore({
       state.username = storedUsername || '';
       state.isLoggedIn = storedisLoggedIn || '';
     },
+
     setToken(state, accessToken) {
       state.accessToken = accessToken;
       localStorage.setItem('token', accessToken)
     },
+
     setId(state,user)
     {
-      state.user = user;
-      localStorage.setItem("user", user)
+      state.user = user.id;
+      localStorage.setItem('user', user.id)
     },
 
     clearToken(state) {
       state.accessToken = null;
       localStorage.removeItem('token')
     },
+
     SET_LOGIN(state, username) {
       state.isLoggedIn = true;
       state.username = username;
@@ -46,6 +51,12 @@ export default createStore({
     setSentence(state, sentencePayload) {
       state.sentence = sentencePayload;
     },
+
+    setComments(state, comments) {
+      state.comments = comments;
+      localStorage.setItem('comments', comments);
+    },
+
   },
  
   actions: {
@@ -59,9 +70,9 @@ export default createStore({
 
         const username = response.data.user.username;
         const accessToken = response.data.token.access;
+        console.log(response.data.id)
         commit('setToken', accessToken);
         commit('setId', response.data.user)
-        // axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         commit('SET_LOGIN', username);
 
       } catch (error) {
@@ -90,6 +101,18 @@ export default createStore({
         throw error;
       }
     },
+
+    fetchComments(description) {
+      axios.get(`http://127.0.0.1:8000/api/v1/app/comment/`) // Điều chỉnh URL tương ứng
+        .then(response => {
+          description.commit('setComments', response.data);
+          console.log('comment list nè')
+        })
+        .catch(error => {
+          console.error('Error fetching comments:', error);
+        });
+    },
+
   },
   modules: {},
   getters: {
@@ -97,5 +120,6 @@ export default createStore({
     isLoggedIn: state => state.isLoggedIn,
     username: state => state.username,
     getUserId: state => state.user ? state.user.id : null,
+    getComments: state => state.comments,
   }
 });
