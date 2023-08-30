@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     <i class="fa-regular fa-pen-to-square"
-                    data-bs-toggle="modal" 
+                        data-bs-toggle="modal" 
                         data-bs-target="#exampleModal"
                         @click="handleEdit(row.id)"
                     ></i>
@@ -83,8 +83,7 @@ export default defineComponent({
         console.log(props.columns)
         const getData = async () => {
             await axios.get(props.api)
-            .then(res => {
-                console.log(res.data)
+            .then(res => {          
                 resGetDataAll.value = res.data;
                 console.log('1',resGetDataAll.value)
             })
@@ -98,14 +97,15 @@ export default defineComponent({
         }
 
         const handleAdd = () => {
-            console.log("formState: ", formState);
-            console.log("resGetDataAll: ", resGetDataAll.value);
-            const {id, ...result} = resGetDataAll.value[0];
+            const col = props.columns.map(x => x.name)
+            console.log("coll: ", col)
+            const [id, ...result] = col;
             console.log(id)
+            console.log("result: ", result)
             for(let i in result) {
-                formState[i] = ""
+                formState[result[i]] = ""
             }
-            if(props.idPara !== '') {
+            if(props.idPara !== undefined) {
                 formState['paragraph'] = props.idPara
             }
             action.value = 'POST'

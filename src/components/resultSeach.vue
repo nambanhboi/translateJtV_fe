@@ -13,12 +13,14 @@
             <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
           </div>
           <div class="column2">
-            <div class="detail">
-              <p>
-                Xem toàn bộ ngữ cảnh
-                <i class="fa-solid fa-up-down-left-right"></i>
-              </p>
-            </div>
+            <router-link :to="{ name: 'nguCanh', params: { id: sentence.id } }">
+              <div class="detail" >
+                <p>
+                  Xem toàn bộ ngữ cảnh
+                  <i class="fa-solid fa-up-down-left-right"></i>
+                </p> 
+              </div>
+            </router-link>
             <div class="comment">
               <router-link :to="{ name: 'detail', params: { id: sentence.id } }">Thảo Luận <i
                   class="fa-regular fa-message"></i></router-link>
@@ -115,6 +117,7 @@
                   </div>
                 </div>
               </div>
+             
             </div>
           </div>
         </div>
@@ -130,77 +133,75 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 // import store from '../store/index.js'
 export default {
-  name: "resultSearch",
-  props: ['sentenceList'],
-  data() {
-    return {
-      selectedRadio: "",
-      report: "",
-      contributeJ: "",
-      contributeV: "",
-      currentSentenceId:null,
-    }
-  },
-  setup() {
-    const handleRead = (sentenceJV) => {
-      console.log(sentenceJV)
-      const msg = new SpeechSynthesisUtterance();
-      msg.lang = 'ja'
-      msg.text = sentenceJV;
-
-      window.speechSynthesis.speak(msg)
-    }
-    return {
-      handleRead
-    }
-  },
-
-  computed: {
-    ...mapGetters(['getUserId']),
-  },
-
-  methods: {
-    submitReport(currentSentenceId) {
-      const userId = this.getUserId;
-      console.log(userId)
-      axios
-        .post('/api/v1/app/report', {
-          typeName: this.report,
-          user: userId,
-          sentenceId: currentSentenceId,
-        })
-        .then(function () {
-          alert('thành công!');
-        })
-        .catch(function (error) {
-          alert("báo cáo thất bại!");
-          console.log(error);
-        });
+    name: "resultSearch",
+    props: ['sentenceList'],
+    data() {
+        return {
+            selectedRadio: "",
+            report: "",
+            contributeJ: "",
+            contributeV: "",
+            currentSentenceId: null,
+        };
     },
-    submitContribute(){
-      const userId = this.getUserId;
-      console.log(userId)
-      console.log(this.contributeJ)
-      console.log(this.contributeV)
-      axios
-      .post('/api/v1/app/contribute',{
-        user : userId,
-        sentenceVn: this.contributeV,
-        sentenceJv: this.contributeJ
-      })
-      .then(function () {
-        alert("Thành công!");
-      })
-      .catch(function (error){
-        alert("báo cáo thất bại!");
-        console.log(error);
-      })
-    },
+    setup() {
+        const handleRead = (sentenceJV) => {
+            console.log(sentenceJV);
+            const msg = new SpeechSynthesisUtterance();
+            msg.lang = 'ja';
+            msg.text = sentenceJV;
+            window.speechSynthesis.speak(msg);
+        };
 
-    btn_comment() {
-      console.log('hiển thị rồi nè')
-    }
-  }
+        return {
+            handleRead,
+            
+        };
+    },
+    computed: {
+        ...mapGetters(['getUserId']),
+    },
+    methods: {
+        submitReport(currentSentenceId) {
+            const userId = this.getUserId;
+            console.log(userId);
+            axios
+                .post('/api/v1/app/report', {
+                typeName: this.report,
+                user: userId,
+                sentenceId: currentSentenceId,
+            })
+                .then(function () {
+                alert('thành công!');
+            })
+                .catch(function (error) {
+                alert("báo cáo thất bại!");
+                console.log(error);
+            });
+        },
+        submitContribute() {
+            const userId = this.getUserId;
+            console.log(userId);
+            console.log(this.contributeJ);
+            console.log(this.contributeV);
+            axios
+                .post('/api/v1/app/contribute', {
+                user: userId,
+                sentenceVn: this.contributeV,
+                sentenceJv: this.contributeJ
+            })
+                .then(function () {
+                alert("Thành công!");
+            })
+                .catch(function (error) {
+                alert("báo cáo thất bại!");
+                console.log(error);
+            });
+        },
+        btn_comment() {
+            console.log('hiển thị rồi nè');
+        }
+    },
 };
 </script>
 
@@ -254,6 +255,12 @@ export default {
 .comment p {
   margin: 0;
   padding: 5px 10px;
+
+}
+
+.detail {
+  text-decoration: none;
+  color: black;
 }
 
 .column3 {

@@ -18,7 +18,7 @@ export default createStore({
     },
     setToken(state, accessToken) {
       state.accessToken = accessToken;
-      localStorage.setItem('token', accessToken)
+      //localStorage.setItem('token', accessToken)
     },
     setId(state,user)
     {
@@ -60,7 +60,7 @@ export default createStore({
         const username = response.data.user.username;
         const accessToken = response.data.token.access;
         commit('setToken', accessToken);
-        commit('setId', response.data.user)
+        commit('setId', JSON.stringify(response.data.user))
         // axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         commit('SET_LOGIN', username);
 

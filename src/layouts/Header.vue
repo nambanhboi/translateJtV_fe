@@ -34,10 +34,6 @@
             >
           </li>
           <li class="nav-item">
-            <router-link to="/admin/sentence_list" class="router"
-              ><strong>&nbsp; &nbsp;Quản lý câu&nbsp; &nbsp; &nbsp;</strong></router-link>
-          </li>
-          <li class="nav-item">
             <!-- <router-link to="/report" class="router"><strong>Báo Cáo</strong></router-link> -->
             <i class="fa-solid fa-user" @click="togglDisplay"></i>&nbsp; 
               <div class="logOut" :style="{display:showLogOut ? 'block' : 'none'}" @click="logout">Đăng xuất</div>
