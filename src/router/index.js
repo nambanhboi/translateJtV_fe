@@ -39,6 +39,12 @@ const routes = [
         component: () => import("../views/app/detail.vue"),
         props: true,
     },
+    {
+        path: "/nguCanh/:id",
+        name: "nguCanh",
+        component: () => import("../views/app/NguCanh.vue"),
+        props: true,
+    },
 ];
 
 const router = createRouter({

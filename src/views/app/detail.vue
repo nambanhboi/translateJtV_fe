@@ -1,57 +1,57 @@
 <template>
-  <div class="show-comments">
-    <div class="container-comments" v-if="sentence">
-      <div class="resutlContent">
-        <div class="resutlImg">
-          <img :src="sentence.image">
+    <div class="show-comments">
+      <div class="container-comments" v-if="sentence">
+        <div class="resutlContent" >
+          <div class="resutlImg">
+            <img :src="sentence.image" >
+          </div>
+          <div class="resutlDes">
+            <div class="column1">
+              <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{  sentence.sentenceJV }}</h2>
+              <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
+            </div>
+            <div class="column2">
+              <div class="detail">
+                <p>Xem toàn bộ ngữ cảnh <i class="fa-solid fa-up-down-left-right"></i></p>
+              </div>
+            </div>
+            <div class="column3">
+              <div class="column3Left">
+                <div class="style"><p>#{{ sentence.style }}</p></div>
+                <div class="topic"><p>#{{  sentence.topic }}</p></div>
+              </div>
+              <div class="column3Right">
+                <p><i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="resutlDes">
-          <div class="column1">
-            <h2><i class="fa-solid fa-headphones" style="margin-right:5px;"></i>{{ sentence.sentenceJV }}</h2>
-            <p style="font-size:1.5rem; margin-bottom:0;">{{ sentence.sentenceVN }}</p>
+        <hr>
+        <form >
+          <div class="list-comments">
+            <form class="input-comment" @submit.prevent="submitComment">
+              <input type="text" id="comment" class="form-control" placeholder="Nhập bình luận" v-model="description" />
+              <button type="submit" class="btn-comment" @click="submitComment">Bình Luận</button>
+            </form>
           </div>
-          <div class="column2">
-            <div class="detail">
-              <p>Xem toàn bộ ngữ cảnh <i class="fa-solid fa-up-down-left-right"></i></p>
-            </div>
-          </div>
-          <div class="column3">
-            <div class="column3Left">
-              <div class="style">
-                <p>#{{ sentence.style }}</p>
-              </div>
-              <div class="topic">
-                <p>#{{ sentence.topic }}</p>
-              </div>
-            </div>
-            <div class="column3Right">
-              <p><i class="fa-solid fa-triangle-exclamation"></i> Báo Cáo</p>
-            </div>
-          </div>
+        </form>
+        <div class="showComments">
+          <ul>
+            <li class="comment" v-for="(comment, id) in comments" :key="id">
+              {{ username }}
+              {{ comment }}
+            </li>
+          </ul>
         </div>
       </div>
-      <hr>
-      <form>
-        <div class="list-comments">
-          <form class="input-comment" @submit.prevent="submitComment">
-            <input type="text" id="comment" class="form-control" placeholder="Nhập bình luận" v-model="description" />
-            <button type="submit" class="btn-comment" @click="submitComment">Bình Luận</button>
-          </form>
-          <!-- <div class="display-cmts">
-              {{users.username}}  
-              {{comments.description}} 
-            </div> -->
-        </div>
-      </form>
     </div>
-  </div>
-</template>
+  </template>
   
 <script>
 import { useStore } from 'vuex';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import axios from 'axios';
 export default {
@@ -71,9 +71,16 @@ export default {
       sentence: computed(() => store.state.sentence),
     }
   },
-  created() {
-    this.$store.commit('initializeStore');
-  },
+    created() {
+      this.$store.commit('initializeStore');
+    },
+    createdComments() {
+      const store = useStore();
+      store.dispatch("fetchComments");
+      return {
+      comments: computed(() => store.state.comments),
+      }
+    },
   computed: {
     sentenceVN() {
       return this.$store.state.sentence.id;
@@ -81,32 +88,32 @@ export default {
     username() {
       return this.$store.state.username;
     },
-    ...mapGetters(['getAccessToken'])
+    comment() {
+      return this.$store.state.comments.description;
+    },
+    ...mapGetters(['getUserId']),
+    ...mapGetters(['getComments']),
   },
 
   methods: {
-    submitComment() {
-      const Comment = {
+    ...mapActions(['fetchComments']),
+    
+    submitComment(){
+      const Comment ={
         description: this.description,
         sentence: this.sentenceVN,
-        user: this.username,
+        user: this.getUserId,
       };
-      try {
-        const res = axios.post('api/v1/app/comment', Comment, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.getAccessToken}`
-          }
+      
+      axios
+      .post('api/v1/app/comment', Comment)
+        .then(function(){
+          alert('Comment thành công!')
         })
-        console.log(res)
-        console.log('Comment thành công!')
-
-      }
-      catch (err) {
-        console.log(err)
+      
+        .catch(function() {
         console.log('Comment lỗi!')
-
-      }
+        })
     }
   }
 }

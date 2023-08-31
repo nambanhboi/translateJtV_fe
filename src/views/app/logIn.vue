@@ -100,26 +100,14 @@ export default {
           password:  this.password,
         }
         try {
-        await this.$store.dispatch("login", credentials);
-        // Nếu không có lỗi, chuyển hướng đến trang '/' sau khi đăng nhập thành công
-
+          await this.$store.dispatch("login", credentials);
+          // Nếu không có lỗi, chuyển hướng đến trang '/' sau khi đăng nhập thành công
+          this.$store.dispatch('setToken');
           this.$router.push('/');
         } catch (error) {
         console.error(error);
         console.log('Lỗi rồi đăng nhập!');
       }
-      //   await axios.post('/api/v1/token/login/', formData)
-      // .then((res)=>{
-      //   console.log(res);
-      //   const username = formData.username;
-      //   console.log(username)
-      //   localStorage.setItem('user',res.data)
-      //   this.$router.push('/')
-      // })
-      // .catch(error=>{
-      //   console.error(error)
-      //   console.log('Lỗi rồi đăng nhập!')
-      // })
     },
   }
 }
